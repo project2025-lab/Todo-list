@@ -1,45 +1,46 @@
-const form = document.getElementById("task-form");
 const taskInput = document.getElementById("task-input");
 const taskList = document.getElementById("task-list");
-const themeToggle = document.getElementById("theme-toggle");
+const addBtn = document.getElementById("add-task");
 
-// Load theme from localStorage
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark");
+addBtn.addEventListener("click", addTask);
+
+function addTask() {
+  const taskText = taskInput.value.trim();
+  if (taskText === "") return;
+
+  const li = document.createElement("li");
+  li.innerHTML = `
+    <span class="task-text">${taskText}</span>
+    <button onclick="editTask(this)">Edit</button>
+    <button onclick="deleteTask(this)">Delete</button>
+  `;
+  taskList.appendChild(li);
+  taskInput.value = "";
 }
 
-// Load saved tasks
-window.addEventListener("load", loadTasks);
-
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
-  const task = taskInput.value.trim();
-  if (task) {
-    saveTask(task);
-    taskInput.value = "";
-  }
-});
-
-function saveTask(task) {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  tasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  loadTasks();
+function deleteTask(button) {
+  const li = button.parentElement;
+  taskList.removeChild(li);
 }
 
-function loadTasks() {
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  taskList.innerHTML = "";
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-    li.textContent = task;
-    taskList.appendChild(li);
-  });
-}
+function editTask(button) {
+  const li = button.parentElement;
+  const span = li.querySelector(".task-text");
 
-// Theme toggle logic
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-  const theme = document.body.classList.contains("dark") ? "dark" : "light";
-  localStorage.setItem("theme", theme);
-});
+  const currentText = span.textContent;
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = currentText;
+  input.className = "edit-input";
+
+  const saveButton = document.createElement("button");
+  saveButton.textContent = "Save";
+  saveButton.onclick = () => {
+    span.textContent = input.value;
+    li.replaceChild(span, input);
+    li.replaceChild(button, saveButton);
+  };
+
+  li.replaceChild(input, span);
+  li.replaceChild(saveButton, button);
+}
