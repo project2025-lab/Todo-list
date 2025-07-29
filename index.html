@@ -7,16 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Dark mode toggle -->
+  <label class="switch">
+    <input type="checkbox" id="theme-toggle" />
+    <span class="slider"></span>
+  </label>
+
   <div class="container">
-    <button id="theme-toggle">🌙 Toggle Dark Mode</button>
-    <h1>📝 To-Do List</h1>
-
-    <form id="task-form">
-      <input type="text" id="task-input" placeholder="Enter a new task" required />
-      <button type="submit">Add Task</button>
-    </form>
-
-    <ul id="task-list"></ul>
+    <h1>To-Do List 📝</h1>
+    <input type="text" id="taskInput" placeholder="Enter your task" />
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
   </div>
 
   <script src="script.js"></script>
