@@ -11,8 +11,8 @@ function addTask() {
   const li = document.createElement("li");
   li.innerHTML = `
     <span class="task-text">${taskText}</span>
-    <button onclick="editTask(this)">Edit</button>
-    <button onclick="deleteTask(this)">Delete</button>
+    <button class="edit-btn" onclick="editTask(this)">Edit</button>
+    <button class="delete-btn" onclick="deleteTask(this)">Delete</button>
   `;
   taskList.appendChild(li);
   taskInput.value = "";
@@ -35,6 +35,7 @@ function editTask(button) {
 
   const saveButton = document.createElement("button");
   saveButton.textContent = "Save";
+  saveButton.className = "save-btn";
   saveButton.onclick = () => {
     span.textContent = input.value;
     li.replaceChild(span, input);
