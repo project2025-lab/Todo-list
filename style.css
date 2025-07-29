@@ -88,3 +88,9 @@ body.dark #task-list li {
   color: #f1f1f1;       /* Light text */
   border: 1px solid #555;
 }
+.edit-input {
+  width: 70%;
+  padding: 6px;
+  margin-right: 5px;
+  border: 1px solid #888;
+}
