@@ -1,42 +1,34 @@
-const form = document.getElementById("todo-form");
-const input = document.getElementById("task-input");
-const list = document.getElementById("task-list");
+const input = document.getElementById("taskInput");
+const list = document.getElementById("taskList");
+const toggle = document.getElementById("theme-toggle");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const taskText = input.value.trim();
-  if (taskText) {
-    addTask(taskText);
-    input.value = "";
-  }
-});
+function addTask() {
+  if (!input.value.trim()) return;
 
-function addTask(text) {
   const li = document.createElement("li");
-
-  const span = document.createElement("span");
-  span.textContent = text;
+  const text = document.createElement("span");
+  text.textContent = input.value;
+  li.appendChild(text);
 
   const editBtn = document.createElement("button");
   editBtn.textContent = "Edit";
   editBtn.className = "edit-btn";
   editBtn.onclick = () => {
-    const newText = prompt("Edit task:", span.textContent);
-    if (newText !== null) span.textContent = newText.trim();
+    const newTask = prompt("Edit task:", text.textContent);
+    if (newTask) text.textContent = newTask;
   };
+  li.appendChild(editBtn);
 
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
   deleteBtn.className = "delete-btn";
   deleteBtn.onclick = () => li.remove();
-
-  li.appendChild(span);
-  li.appendChild(editBtn);
   li.appendChild(deleteBtn);
+
   list.appendChild(li);
+  input.value = "";
 }
 
-// Dark Mode Toggle
-document.getElementById("theme-toggle").addEventListener("change", () => {
+toggle.addEventListener("change", () => {
   document.body.classList.toggle("dark");
 });
